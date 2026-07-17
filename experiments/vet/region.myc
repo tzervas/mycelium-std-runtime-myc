@@ -1,0 +1,165 @@
+// nodule: std.runtime.region
+// Layer-3 region-based batched scope reclamation — DN-32 §2.3 / RFC-0027 §10.3 / MEM-3.
+//
+// **Region = Scope.** A [`Region`] is the runtime embodiment of one node in the RT7 scope tree
+// (RFC-0008 RT7). It accumulates **deferred reclamation entries** — values whose RC hit zero
+// within this scope, plus scope-local allocations that should be freed at scope exit — and emits
+// one [`ReclamationRecord`] per entry (trigger = `ScopeExit`) through a [`ReclamationSink`] when
+// the region is **closed** (`Region::close`). Reclamation is **batched** (bulk, amortized) rather
+// than per-value.
+//
+// # Canonical identity types (`ScopeNodeId` / `RegionEpoch`)
+//
+// MEM-1 (`reclamation.rs`) left [`ScopeId`] and [`SweepEpoch`] as `u64` placeholders with a FLAG
+// to canonicalize in MEM-3. This module provides the canonical forms:
+//
+// - [`ScopeNodeId`] — the region-tier scope identity (a monotonic `u64` allocated per
+//   [`Region::new`] call, unique within a process lifetime). [`ScopeId`] is bridged via
+//   [`ScopeNodeId::as_scope_id`] so MEM-1/MEM-2 records carry the same field type.
+// - [`RegionEpoch`] — a monotonic counter that advances once per [`Region::close`] call.
+//   [`SweepEpoch`] is bridged via [`RegionEpoch::as_sweep_epoch`].
+//
+// Both are newtypes over `u64` — the same backing integer — but now grounded in the region
+// model rather than being bare placeholders. The MEM-1 types (`ScopeId`, `SweepEpoch`) are
+// retained as the record-field surface (they are part of the stable RFC-0027 §9 field set);
+// `ScopeNodeId` / `RegionEpoch` are the region-tier ALLOCATION types that produce them.
+//
+// # Sweep order (RFC-0027 §10.3 / DN-32 §3)
+//
+// The scope tree encodes the reclamation order directly:
+//
+// - **Parent–child: TOTAL.** A child region MUST be closed before its parent closes. The
+//   parent's [`Region::close`] does NOT close children; the caller is responsible for closing
+//   all child regions first (structured-concurrency RT7 contract: a scope does not exit until
+//   every child completes). This is encoded in [`ScopeTree::close_ordered`] and proven in the
+//   property test (`child epoch < parent epoch`). Live executor wiring is downstream (FLAG).
+// - **Siblings: CONCURRENT (OQ-1 resolved).** Sibling regions are independent — there is no
+//   ordering constraint between them. Each sibling closes (and batches its reclamation) without
+//   synchronizing with any other sibling. This is safe because LR-9 rules out cross-sibling
+//   aliases (RFC-0027 §11 OQ-1 / DN-32 §3).
+//
+// # Guarantee tags (per-op)
+//
+// | Operation | Tag | Basis |
+// |---|---|---|
+// | Batched `ScopeExit` emit (one record per deferred entry) | `Exact` | Every entry in `deferred` is drained; `sink.emit` called once per entry; loop is exhaustive; enforced-by-construction |
+// | `ScopeNodeId` uniqueness within process | `Exact` | Atomic monotonic counter, `fetch_add(1)`, strictly increasing |
+// | `RegionEpoch` monotonicity | `Exact` | `GLOBAL_EPOCH.fetch_add(1, Relaxed)` — strictly increasing per close call |
+// | Child epoch < parent epoch (total parent–child order) | `Exact` | Children close (allocate epoch) before parent → lower epoch by construction |
+// | Sibling reclamation is CONCURRENT (safe) | `Proven`-modulo-LR-9 | LR-9 rules out cross-sibling aliases; argument per DN-32 §3 / RFC-0027 §11 OQ-1; no in-repo mechanized proof |
+// | Batching is a perf win over per-value drops | `Declared` | Expected from Tofte-Talpin + DN-32 §2.3 / §6a; no Mycelium measurement |
+//
+// # FLAGs — downstream work
+//
+// - **FLAG (live-executor wiring):** The actual firing of `Region::close` at scope-exit in the
+//   running scheduler/MLIR runtime is downstream (live-executor wiring). This module provides the
+//   data structure and the `close()` call; the executor must call it at the right time.
+// - **FLAG (cross-hypha atomic RC):** `Region` is single-threaded (intra-hypha). Cross-hypha
+//   sharing and the atomic RC path are DN-32 §7 / RFC-0027 §12 — a named sub-question for the
+//   follow-on, not handled here.
+// - **FLAG (strong/total sibling coupling — opt-in):** DN-32 §3 mentions a "strong coupling
+//   opt-in for high-assurance subsets". That option is not implemented here; deferred to the
+//   follow-on RFC/implementation.
+// - **FLAG (`ChannelId` canonicalization):** `ChannelId` in `reclamation.rs` remains a `u64`
+//   placeholder — it belongs to the network/channel tier, which is out of scope for MEM-3.
+//
+// Tests: `src/tests/region.rs` (M-797 in-crate layout).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.runtime.region;
+
+// The canonical scope-tree identity type for the region tier (MEM-3).
+//
+// Allocated per [`Region::new`] via a monotonic global counter. Unique within a process
+// lifetime. This is the resolved form of the `u64` placeholder that MEM-1 left in
+// [`ScopeId`] with a FLAG to canonicalize here. Use [`ScopeNodeId::as_scope_id`] to convert
+// to [`ScopeId`] for use in [`ReclamationRecord`] fields (the stable RFC-0027 §9 type).
+//
+// Guarantee: `Exact` — monotonic, unique per allocation (atomic counter, strictly increasing).
+pub type ScopeNodeId = ScopeNodeId(Binary{64});
+
+impl Show[ScopeNodeId] for ScopeNodeId {
+  fn render(x: ScopeNodeId) => Bytes =
+    match x { ScopeNodeId(p0) => bytes_concat(bytes_concat("ScopeNodeId(", render(p0)), ")") };
+};
+
+fn eq_ScopeNodeId(a: ScopeNodeId, b: ScopeNodeId) => Binary{1} =
+    match a { ScopeNodeId(p0) => match b { ScopeNodeId(q0) => eq(p0, q0) } };
+
+fn hash_ScopeNodeId(a: ScopeNodeId) => Bytes =
+    match a { ScopeNodeId(p0) => hash_blake3(bytes_concat("ScopeNodeId", hash_blake3(bin_to_bytes(p0)))) };
+
+impl Ord3[ScopeNodeId] for ScopeNodeId {
+  fn cmp(a: ScopeNodeId, b: ScopeNodeId) => Binary{8} =
+    match a { ScopeNodeId(p0) => match b { ScopeNodeId(q0) => cmp(p0, q0) } };
+};
+
+impl ScopeNodeId {
+  // Convert to a [`ScopeId`] for use in [`ReclamationRecord`] fields (RFC-0027 §9).
+  //
+  // This is the canonical bridge between the region-tier allocation identity and the
+  // MEM-1 record field type. The underlying `u64` is preserved losslessly.
+  //
+  // Guarantee: `Exact` — lossless conversion.
+  fn as_scope_id(self: ScopeNodeId) => ScopeId = ScopeId((match self { ScopeNodeId(p0) => p0 }));
+  // Return the underlying `u64` value.
+  fn as_u64(self: ScopeNodeId) => Binary{64} = (match self { ScopeNodeId(p0) => p0 });
+};
+
+// A monotonic epoch counter — one allocated per [`Region::close`] call.
+//
+// Ties a reclamation batch to the scheduling model's deterministic audit anchor
+// (RFC-0008 §4.3). Children close before their parent and therefore receive numerically
+// lower epoch values, encoding the child→root total order as a number line.
+//
+// This is the resolved form of the `u64` placeholder that MEM-1 left in [`SweepEpoch`]
+// with a FLAG to canonicalize here. Use [`RegionEpoch::as_sweep_epoch`] to convert to
+// [`SweepEpoch`] for use in [`ReclamationRecord`] fields (the stable RFC-0027 §9 type).
+//
+// Guarantee: `Exact` — monotonic, unique per `close` call (atomic counter).
+type RegionEpoch = RegionEpoch(Binary{64});
+
+impl Show[RegionEpoch] for RegionEpoch {
+  fn render(x: RegionEpoch) => Bytes =
+    match x { RegionEpoch(p0) => bytes_concat(bytes_concat("RegionEpoch(", render(p0)), ")") };
+};
+
+fn eq_RegionEpoch(a: RegionEpoch, b: RegionEpoch) => Binary{1} =
+    match a { RegionEpoch(p0) => match b { RegionEpoch(q0) => eq(p0, q0) } };
+
+fn hash_RegionEpoch(a: RegionEpoch) => Bytes =
+    match a { RegionEpoch(p0) => hash_blake3(bytes_concat("RegionEpoch", hash_blake3(bin_to_bytes(p0)))) };
+
+impl Ord3[RegionEpoch] for RegionEpoch {
+  fn cmp(a: RegionEpoch, b: RegionEpoch) => Binary{8} =
+    match a { RegionEpoch(p0) => match b { RegionEpoch(q0) => cmp(p0, q0) } };
+};
+
+impl RegionEpoch {
+  // Convert to a [`SweepEpoch`] for use in [`ReclamationRecord`] fields (RFC-0027 §9).
+  //
+  // Guarantee: `Exact` — lossless conversion.
+  fn as_sweep_epoch(self: RegionEpoch) => SweepEpoch = SweepEpoch((match self { RegionEpoch(p0) => p0 }));
+  // Return the underlying `u64` value.
+  // Declared: renamed `impl RegionEpoch { fn as_u64 }` -> `_11RegionEpoch6as_u64` (D4 inherent-impl flat-fn desugar + DN-140 length-prefix mangle, M-664).
+  fn _11RegionEpoch6as_u64(self: RegionEpoch) => Binary{64} = (match self { RegionEpoch(p0) => p0 });
+};
+
+// Summary returned by [`Region::close`] — the audit-visible outcome of a scope-exit
+// reclamation batch.
+//
+// Carries the region's identity, the epoch assigned at close time, and the count of
+// deferred entries reclaimed. Useful for supervision observability, property tests, and
+// the sweep-order assertion (child epoch < parent epoch).
+//
+// Guarantee: `Exact` — all fields are deterministic functions of the close operation.
+pub type ClosedRegion = ClosedRegion(ScopeNodeId, RegionEpoch, Binary{64});
+
+impl Show[ClosedRegion] for ClosedRegion {
+  fn render(x: ClosedRegion) => Bytes =
+    match x { ClosedRegion(p0, p1, p2) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("ClosedRegion(", render(p0)), ", "), render(p1)), ", "), render(p2)), ")") };
+};
+
+fn eq_ClosedRegion(a: ClosedRegion, b: ClosedRegion) => Binary{1} =
+    match a { ClosedRegion(p0, p1, p2) => match b { ClosedRegion(q0, q1, q2) => and(and(eq_ScopeNodeId(p0, q0), eq_RegionEpoch(p1, q1)), eq(p2, q2)) } };

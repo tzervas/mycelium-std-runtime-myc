@@ -1,0 +1,17 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/scheduler.rs",
+  "emitted_items": [],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/scheduler.rs",
+      "line": 23,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use mycelium_sched :: scheduler :: { Scheduler , SchedulerError , StealDecision , StealPolicy , SCHEDULER_LIVENESS_STRENGTH , SCHEDULER_RT2_STRENGTH , STEAL_POLICY_STRENGTH , } ;",
+      "reason": "`use mycelium_sched.scheduler::Scheduler` — `mycelium_sched.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_sched.scheduler::SchedulerError` — `mycelium_sched.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_sched.scheduler::StealDecision` — `mycelium_sched.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_sched.scheduler::StealPolicy` — `mycelium_sched.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_sched.scheduler::SCHEDULER_LIVENESS_STRENGTH` — `mycelium_sched.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_sched.scheduler::SCHEDULER_RT2_STRENGTH` — `mycelium_sched.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_sched.scheduler::STEAL_POLICY_STRENGTH` — `mycelium_sched.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    }
+  ],
+  "total_top_level_items": 1
+}

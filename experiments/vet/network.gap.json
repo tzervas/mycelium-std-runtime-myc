@@ -1,0 +1,333 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+  "emitted_items": [
+    "ChannelNodeId",
+    "impl ChannelNodeId",
+    "ChannelError",
+    "TrySend",
+    "TryRecv"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 30,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use std :: collections :: VecDeque ;",
+      "reason": "`use std.collections::VecDeque` — `std.collections` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 31,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use std :: sync :: atomic :: { AtomicU64 , Ordering } ;",
+      "reason": "`use std.sync.atomic::AtomicU64` — `std.sync.atomic` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use std.sync.atomic::Ordering` — `std.sync.atomic` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 32,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use std :: sync :: { Arc , Mutex } ;",
+      "reason": "`use std.sync::Arc` — `std.sync` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use std.sync::Mutex` — `std.sync` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 34,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_core :: { ContentHash , GuaranteeStrength } ;",
+      "reason": "`use mycelium_core::ContentHash` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_core::GuaranteeStrength` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 36,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: reclamation :: { ChannelId , ReclamationRecord , ReclamationSink , ScopeId , SweepEpoch } ;",
+      "reason": "`use reclamation::ChannelId` — `ChannelId` is not among sibling `reclamation`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use reclamation::ReclamationRecord` — `ReclamationRecord` is not among sibling `reclamation`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use reclamation::ReclamationSink` — `ReclamationSink` is not among sibling `reclamation`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use reclamation::ScopeId` — `ScopeId` is not among sibling `reclamation`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use reclamation::SweepEpoch` — `SweepEpoch` is not among sibling `reclamation`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 38,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Guarantee strength for single-channel FIFO ordering.\"] pub const CHANNEL_FIFO_STRENGTH : GuaranteeStrength = GuaranteeStrength :: Exact ;",
+      "reason": "top-level `const CHANNEL_FIFO_STRENGTH` — co-emit (ORACLE-R1 A4) only covers plain unsigned integer types (`u8`/`u16`/`u32`/`u64`/`u128`/`usize`); other types have no const item production and no faithful zero-arg-fn encoding (gap, never fabricate)",
+      "item_name": "CHANNEL_FIFO_STRENGTH"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 41,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Guarantee strength for cross-channel Kahn-determinism.\"] pub const KAHN_DETERMINISM_STRENGTH : GuaranteeStrength = GuaranteeStrength :: Empirical ;",
+      "reason": "top-level `const KAHN_DETERMINISM_STRENGTH` — co-emit (ORACLE-R1 A4) only covers plain unsigned integer types (`u8`/`u16`/`u32`/`u64`/`u128`/`usize`); other types have no const item production and no faithful zero-arg-fn encoding (gap, never fabricate)",
+      "item_name": "KAHN_DETERMINISM_STRENGTH"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 52,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "static GLOBAL_CHANNEL_ID : AtomicU64 = AtomicU64 :: new (1) ;",
+      "reason": "top-level `static GLOBAL_CHANNEL_ID` — no static item production in the grammar",
+      "item_name": "GLOBAL_CHANNEL_ID"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 56,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The canonical channel-tier identity type (resolves the MEM-1 `ChannelId` placeholder FLAG).\"] # [doc = \"\"] # [doc = \" Allocated per [`Network::channel`] call via a monotonic global counter. Unique within a\"] # [doc = \" process lifetime. Mirrors [`crate::region::ScopeNodeId`] — same pattern, same semantics,\"] # [doc = \" different tier. Use [`ChannelNodeId::as_channel_id`] to convert to [`ChannelId`] for use in\"] # [doc = \" [`ReclamationRecord`] fields (the stable RFC-0027 §9 type).\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — monotonic, unique per allocation (atomic counter, strictly increasing).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , PartialOrd , Ord)] pub struct ChannelNodeId (pub (crate) u64) ;",
+      "reason": "struct `ChannelNodeId` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "ChannelNodeId"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 56,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The canonical channel-tier identity type (resolves the MEM-1 `ChannelId` placeholder FLAG).\"] # [doc = \"\"] # [doc = \" Allocated per [`Network::channel`] call via a monotonic global counter. Unique within a\"] # [doc = \" process lifetime. Mirrors [`crate::region::ScopeNodeId`] — same pattern, same semantics,\"] # [doc = \" different tier. Use [`ChannelNodeId::as_channel_id`] to convert to [`ChannelId`] for use in\"] # [doc = \" [`ReclamationRecord`] fields (the stable RFC-0027 §9 type).\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — monotonic, unique per allocation (atomic counter, strictly increasing).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , PartialOrd , Ord)] pub struct ChannelNodeId (pub (crate) u64) ;",
+      "reason": "struct `ChannelNodeId` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "ChannelNodeId"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 56,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The canonical channel-tier identity type (resolves the MEM-1 `ChannelId` placeholder FLAG).\"] # [doc = \"\"] # [doc = \" Allocated per [`Network::channel`] call via a monotonic global counter. Unique within a\"] # [doc = \" process lifetime. Mirrors [`crate::region::ScopeNodeId`] — same pattern, same semantics,\"] # [doc = \" different tier. Use [`ChannelNodeId::as_channel_id`] to convert to [`ChannelId`] for use in\"] # [doc = \" [`ReclamationRecord`] fields (the stable RFC-0027 §9 type).\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — monotonic, unique per allocation (atomic counter, strictly increasing).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , PartialOrd , Ord)] pub struct ChannelNodeId (pub (crate) u64) ;",
+      "reason": "struct `ChannelNodeId` derive(...) names Eq, Ord not in the DN-128 standard-derive set this leaf builds (Debug/Default/Clone/Copy/PartialEq/PartialOrd/Hash all recognized; bare Eq/Ord are deliberately NOT recognized — see emit/derives/mod.rs::TABLE's doc for why) — dropped, no confirmed Mycelium surface",
+      "item_name": "ChannelNodeId"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 67,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "impl ChannelNodeId { # [doc = \" Allocate a fresh, unique `ChannelNodeId`.\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — strictly greater than all previously allocated ids.\"] fn allocate () -> Self { ChannelNodeId (GLOBAL_CHANNEL_ID . fetch_add (1 , Ordering :: Relaxed)) } # [doc = \" Convert to a [`ChannelId`] for use in [`ReclamationRecord`] fields (RFC-0027 §9).\"] # [doc = \"\"] # [doc = \" This is the canonical bridge between the channel-tier allocation identity and the\"] # [doc = \" MEM-1 record field type. The underlying `u64` is preserved losslessly.\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — lossless conversion.\"] # [must_use] pub fn as_channel_id (self) -> ChannelId { ChannelId (self . 0) } # [doc = \" Return the underlying `u64` value.\"] # [must_use] pub fn as_u64 (self) -> u64 { self . 0 } }",
+      "reason": "impl method `allocate` body: PENDING-BACKEND(CU-8): atomic `.fetch_add()` needs a memory-model RFC surface — desugaring to `fetch_add(recv, …)` would fabricate an unknown prim (M-1037, G2/VR-5)",
+      "item_name": "impl ChannelNodeId"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 67,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl ChannelNodeId { # [doc = \" Allocate a fresh, unique `ChannelNodeId`.\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — strictly greater than all previously allocated ids.\"] fn allocate () -> Self { ChannelNodeId (GLOBAL_CHANNEL_ID . fetch_add (1 , Ordering :: Relaxed)) } # [doc = \" Convert to a [`ChannelId`] for use in [`ReclamationRecord`] fields (RFC-0027 §9).\"] # [doc = \"\"] # [doc = \" This is the canonical bridge between the channel-tier allocation identity and the\"] # [doc = \" MEM-1 record field type. The underlying `u64` is preserved losslessly.\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — lossless conversion.\"] # [must_use] pub fn as_channel_id (self) -> ChannelId { ChannelId (self . 0) } # [doc = \" Return the underlying `u64` value.\"] # [must_use] pub fn as_u64 (self) -> u64 { self . 0 } }",
+      "reason": "dropped non-doc attribute(s) on method `as_channel_id`: # [must_use]",
+      "item_name": "impl ChannelNodeId"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 67,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl ChannelNodeId { # [doc = \" Allocate a fresh, unique `ChannelNodeId`.\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — strictly greater than all previously allocated ids.\"] fn allocate () -> Self { ChannelNodeId (GLOBAL_CHANNEL_ID . fetch_add (1 , Ordering :: Relaxed)) } # [doc = \" Convert to a [`ChannelId`] for use in [`ReclamationRecord`] fields (RFC-0027 §9).\"] # [doc = \"\"] # [doc = \" This is the canonical bridge between the channel-tier allocation identity and the\"] # [doc = \" MEM-1 record field type. The underlying `u64` is preserved losslessly.\"] # [doc = \"\"] # [doc = \" Guarantee: `Exact` — lossless conversion.\"] # [must_use] pub fn as_channel_id (self) -> ChannelId { ChannelId (self . 0) } # [doc = \" Return the underlying `u64` value.\"] # [must_use] pub fn as_u64 (self) -> u64 { self . 0 } }",
+      "reason": "dropped non-doc attribute(s) on method `as_u64`: # [must_use]",
+      "item_name": "impl ChannelNodeId"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 95,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" Shared mutable state behind a `Sender`/`Receiver` pair.\"] struct ChannelInner < V > { buf : VecDeque < V > , capacity : usize , closed : bool , # [doc = \" The canonical channel identity, allocated once at construction.\"] channel_id : ChannelNodeId , }",
+      "reason": "struct `ChannelInner` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "ChannelInner"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 104,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl < V > ChannelInner < V > { fn new (capacity : usize , channel_id : ChannelNodeId) -> Self { ChannelInner { buf : VecDeque :: with_capacity (capacity) , capacity , closed : false , channel_id , } } }",
+      "reason": "no member of this impl block could be transpiled (1 sub-issue(s)): impl method `new` body: struct literal `ChannelInner { .. }` — not an in-file single-ctor struct or enum struct-variant that emits (no constructor to build; a cross-nodule variant is an honest DN-113/DN-134-OQ-2 resolvability gap, never a fabricated out-of-file reference — VR-5/G2)",
+      "item_name": "ChannelInner < V >"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 117,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" Errors returned by `Network` construction operations.\"] # [derive (Debug , PartialEq , Eq)] pub enum ChannelError { # [doc = \" A zero-capacity channel is nonsensical; rejected at construction (G2: fail-closed).\"] ZeroCapacity , }",
+      "reason": "enum `ChannelError` derive(Eq): covered by co-occurring PartialEq → `fn eq_ChannelError` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "ChannelError"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 126,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" A named network of typed channels within a `Colony`.\"] # [doc = \"\"] # [doc = \" Guarantee: **Empirical** (Kahn-determinism, ADR-020 §4).\"] # [derive (Debug)] pub struct Network { _priv : () , }",
+      "reason": "struct `Network` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "Network"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 134,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl Network { # [doc = \" Create a new network.\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** (constructor, trivially correct).\"] pub fn new () -> Self { Network { _priv : () } } # [doc = \" Create a bounded FIFO channel with the given capacity.\"] # [doc = \"\"] # [doc = \" Allocates a fresh [`ChannelNodeId`] for the channel pair (monotonic, unique). Both\"] # [doc = \" `Sender` and `Receiver` share the same id, accessible via `channel_id()`.\"] # [doc = \"\"] # [doc = \" Returns `Err(ChannelError::ZeroCapacity)` if `capacity == 0` (fail-closed, G2:\"] # [doc = \" invalid input is never silently accepted — a zero-capacity channel cannot store any\"] # [doc = \" value and would make every `try_send` return `Full`, which is nonsensical).\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** (construction is deterministic; the zero-capacity check is\"] # [doc = \" deterministic — mutant witness: removing the check makes `test_channel_zero_capacity_fails`\"] # [doc = \" fail).\"] pub fn channel < V > (capacity : usize) -> Result < (Sender < V > , Receiver < V >) , ChannelError > { if capacity == 0 { return Err (ChannelError :: ZeroCapacity) ; } let channel_id = ChannelNodeId :: allocate () ; let inner = Arc :: new (Mutex :: new (ChannelInner :: new (capacity , channel_id))) ; Ok ((Sender { inner : Arc :: clone (& inner) , } , Receiver { inner } ,)) } }",
+      "reason": "no member of this impl block could be transpiled (2 sub-issue(s)): impl method `new` body: struct literal `Network { .. }` — not an in-file single-ctor struct or enum struct-variant that emits (no constructor to build; a cross-nodule variant is an honest DN-113/DN-134-OQ-2 resolvability gap, never a fabricated out-of-file reference — VR-5/G2); impl method `channel` body: function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "Network"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 170,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl Default for Network { fn default () -> Self { Self :: new () } }",
+      "reason": "no member of this impl block could be transpiled (1 sub-issue(s)): impl method `default` body: qualified/associated-function call `Self :: new` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "Network"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 178,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" Sending end of a typed channel.\"] # [doc = \"\"] # [doc = \" SPSC by design: `Sender<V>` is not `Clone` (ADR-020 §4 / RFC-0008 §4.3 RT1).\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** (FIFO ordering within this channel; backed by `VecDeque`).\"] pub struct Sender < V > { inner : Arc < Mutex < ChannelInner < V > > > , }",
+      "reason": "struct `Sender` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "Sender"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 187,
+      "col": 1,
+      "category": "GenericBound",
+      "rust_construct": "GenericBound",
+      "snippet": "impl < V > std :: fmt :: Debug for Sender < V > { fn fmt (& self , f : & mut std :: fmt :: Formatter < '_ >) -> std :: fmt :: Result { let inner = self . inner . lock () . unwrap () ; f . debug_struct (\"Sender\") . field (\"buf_len\" , & inner . buf . len ()) . field (\"capacity\" , & inner . capacity) . field (\"closed\" , & inner . closed) . finish () } }",
+      "reason": "impl-level generic parameter(s) on a *trait-instance* impl (`impl<..> Trait for ..`) have no confirmed mapping yet — DN-130 (parametric trait-instance heads + coherence) is the unbuilt scope for that case; DN-131 authorizes only the inherent-impl slot",
+      "item_name": "Sender < V >"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 198,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl < V > Sender < V > { # [doc = \" Non-blocking send. Returns `TrySend::Sent` on success, `TrySend::Full(v)` if the\"] # [doc = \" buffer is at capacity, or `TrySend::Closed(v)` if the channel is closed.\"] # [doc = \"\"] # [doc = \" The value is **always returned on failure** — never dropped silently (G2 / ADR-020 §4).\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** (FIFO push into `VecDeque`; deterministic given the buffer state).\"] pub fn try_send (& self , value : V) -> TrySend < V > { let mut inner = self . inner . lock () . unwrap () ; if inner . closed { return TrySend :: Closed (value) ; } if inner . buf . len () >= inner . capacity { return TrySend :: Full (value) ; } inner . buf . push_back (value) ; TrySend :: Sent } # [doc = \" Close the channel from the sender side.\"] # [doc = \"\"] # [doc = \" After this, `try_recv` on a drained buffer returns `TryRecv::Closed`. Values already\"] # [doc = \" buffered are still deliverable via normal `try_recv` drain — the receiver can drain them\"] # [doc = \" normally (no reclamation needed: the values are delivered, not lost). Only use\"] # [doc = \" [`Receiver::close_with_reclaim`] for the teardown path where **undelivered** in-transit\"] # [doc = \" values must be reclaimed (RFC-0027 §9 / §7.3 / G2).\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** (sets a boolean flag, deterministic).\"] pub fn close (self) { let mut inner = self . inner . lock () . unwrap () ; inner . closed = true ; } # [doc = \" The canonical channel identity shared by this `Sender` and its paired `Receiver`.\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** — allocated once at channel construction; the same id is returned\"] # [doc = \" by both the `Sender` and `Receiver` ends.\"] # [must_use] pub fn channel_id (& self) -> ChannelNodeId { self . inner . lock () . unwrap () . channel_id } }",
+      "reason": "no member of this impl block could be transpiled (3 sub-issue(s)): impl method `try_send` body: method call `.unwrap(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__unwrap` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `unwrap(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered); impl method `close` signature: function has no return type (implicit `()`) — no unit value is representable in this grammar fragment; impl method `channel_id` body: field access on a non-`self` base — the transpiler tracks no local types, so the projection cannot be resolved to a constructor position (only `self.<field>` desugars to a `match`)",
+      "item_name": "Sender < V >"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 243,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" Receiving end of a typed channel.\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** (FIFO ordering within this channel; backed by `VecDeque`).\"] pub struct Receiver < V > { inner : Arc < Mutex < ChannelInner < V > > > , }",
+      "reason": "struct `Receiver` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "Receiver"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 250,
+      "col": 1,
+      "category": "GenericBound",
+      "rust_construct": "GenericBound",
+      "snippet": "impl < V > std :: fmt :: Debug for Receiver < V > { fn fmt (& self , f : & mut std :: fmt :: Formatter < '_ >) -> std :: fmt :: Result { let inner = self . inner . lock () . unwrap () ; f . debug_struct (\"Receiver\") . field (\"buf_len\" , & inner . buf . len ()) . field (\"capacity\" , & inner . capacity) . field (\"closed\" , & inner . closed) . finish () } }",
+      "reason": "impl-level generic parameter(s) on a *trait-instance* impl (`impl<..> Trait for ..`) have no confirmed mapping yet — DN-130 (parametric trait-instance heads + coherence) is the unbuilt scope for that case; DN-131 authorizes only the inherent-impl slot",
+      "item_name": "Receiver < V >"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 261,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl < V > Receiver < V > { # [doc = \" Non-blocking receive. Returns `TryRecv::Received(v)` if a message is buffered,\"] # [doc = \" `TryRecv::Empty` if the buffer is empty and the channel is still open, or\"] # [doc = \" `TryRecv::Closed` if the channel is closed and the buffer is drained.\"] # [doc = \"\"] # [doc = \" This is the **normal drain path** — values are delivered to the receiver, no\"] # [doc = \" reclamation is needed. For the teardown path (values in transit that will never be\"] # [doc = \" delivered), use [`Receiver::close_with_reclaim`].\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** (FIFO pop from `VecDeque`; deterministic given the buffer state).\"] pub fn try_recv (& self) -> TryRecv < V > { let mut inner = self . inner . lock () . unwrap () ; if let Some (v) = inner . buf . pop_front () { return TryRecv :: Received (v) ; } if inner . closed { TryRecv :: Closed } else { TryRecv :: Empty } } # [doc = \" The canonical channel identity shared by this `Receiver` and its paired `Sender`.\"] # [doc = \"\"] # [doc = \" Guarantee: **Exact** — allocated once at channel construction; the same id is returned\"] # [doc = \" by both the `Sender` and `Receiver` ends.\"] # [must_use] pub fn channel_id (& self) -> ChannelNodeId { self . inner . lock () . unwrap () . channel_id } # [doc = \" Teardown path: drain all buffered values, emit one `ReclamationRecord(ChannelClose)`\"] # [doc = \" per value through `sink`, then mark the channel closed.\"] # [doc = \"\"] # [doc = \" This is the **third live reclamation trigger** (RFC-0027 §9 / §7.3 / G2): when a\"] # [doc = \" receiver disconnects while values are still in transit (sent but never to be received),\"] # [doc = \" those values' ownership is released and MUST be reclaimed — one record per value, never\"] # [doc = \" silently dropped (G2 / never-silent principle).\"] # [doc = \"\"] # [doc = \" ## Distinction from normal drain\"] # [doc = \"\"] # [doc = \" - **Normal drain (`try_recv`):** values are delivered to the receiver (no loss, no\"] # [doc = \"   reclamation needed). The receiver is the intended consumer; ownership transfers normally.\"] # [doc = \" - **`close_with_reclaim` (this method):** the receiver is tearing down and will NEVER\"] # [doc = \"   deliver the buffered values. The values are undeliverable in-transit; this method\"] # [doc = \"   releases their ownership and emits a `ChannelClose` reclamation record for each.\"] # [doc = \"\"] # [doc = \" The `hash_of` closure supplies the `value_meta_hash` for each value (RFC-0027 §9 field)\"] # [doc = \" because `V` is an arbitrary type with no inherent [`ContentHash`] (KISS — never\"] # [doc = \" over-constrain `V`). The closure is called on each value before reclamation, in FIFO order.\"] # [doc = \"\"] # [doc = \" ## Returns\"] # [doc = \"\"] # [doc = \" The number of values reclaimed (= the number of `ReclamationRecord`s emitted).\"] # [doc = \"\"] # [doc = \" ## Guarantee\"] # [doc = \"\"] # [doc = \" `Exact` — one `ReclamationRecord(ChannelClose)` is emitted per buffered value,\"] # [doc = \" enforced-by-construction: the buffer is drained with `drain(..)` (exhaustive iteration),\"] # [doc = \" and `sink.emit` is called exactly once per element. The channel is marked closed after\"] # [doc = \" the drain. No value in the buffer at call time can escape without emitting a record.\"] pub fn close_with_reclaim (self , sink : & mut dyn ReclamationSink , scope_id : ScopeId , sweep_epoch : SweepEpoch , hash_of : impl Fn (& V) -> ContentHash ,) -> usize { let mut inner = self . inner . lock () . unwrap () ; let channel_id = inner . channel_id . as_channel_id () ; let values : Vec < V > = inner . buf . drain (..) . collect () ; let count = values . len () ; for value in values { let record = ReclamationRecord :: for_channel_close (scope_id , sweep_epoch , hash_of (& value) , channel_id ,) ; sink . emit (record) ; } inner . closed = true ; count } }",
+      "reason": "no member of this impl block could be transpiled (3 sub-issue(s)): impl method `try_recv` body: method call `.unwrap(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__unwrap` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `unwrap(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered); impl method `channel_id` body: field access on a non-`self` base — the transpiler tracks no local types, so the projection cannot be resolved to a constructor position (only `self.<field>` desugars to a `match`); impl method `close_with_reclaim` signature: unsupported Rust type form `dyn ReclamationSink`",
+      "item_name": "Receiver < V >"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 358,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" Result of a non-blocking send attempt.\"] # [derive (Debug , PartialEq , Eq)] pub enum TrySend < V > { # [doc = \" Message accepted into the channel buffer.\"] Sent , # [doc = \" Channel buffer full; value returned to caller (G2: never silently dropped).\"] Full (V) , # [doc = \" Channel closed; value returned to caller (G2: never silently dropped).\"] Closed (V) , }",
+      "reason": "enum `TrySend` derive(Debug): generic enum — a derived Show impl for a generic type needs DN-130's generic-trait-instance mechanism, out of this leaf's scope (ONESHOT C2 / DN-128 enum half)",
+      "item_name": "TrySend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 358,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" Result of a non-blocking send attempt.\"] # [derive (Debug , PartialEq , Eq)] pub enum TrySend < V > { # [doc = \" Message accepted into the channel buffer.\"] Sent , # [doc = \" Channel buffer full; value returned to caller (G2: never silently dropped).\"] Full (V) , # [doc = \" Channel closed; value returned to caller (G2: never silently dropped).\"] Closed (V) , }",
+      "reason": "enum `TrySend` derive(PartialEq): generic enum — a derived equality fn for a generic type needs DN-130's generic-instance mechanism, out of this leaf's scope (ONESHOT C2 / DN-128 enum half)",
+      "item_name": "TrySend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 358,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" Result of a non-blocking send attempt.\"] # [derive (Debug , PartialEq , Eq)] pub enum TrySend < V > { # [doc = \" Message accepted into the channel buffer.\"] Sent , # [doc = \" Channel buffer full; value returned to caller (G2: never silently dropped).\"] Full (V) , # [doc = \" Channel closed; value returned to caller (G2: never silently dropped).\"] Closed (V) , }",
+      "reason": "enum `TrySend` derive(Eq): covered by co-occurring PartialEq → `fn eq_TrySend` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "TrySend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 369,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" Result of a non-blocking receive attempt.\"] # [derive (Debug , PartialEq , Eq)] pub enum TryRecv < V > { # [doc = \" Message received.\"] Received (V) , # [doc = \" Channel buffer empty; no message available (sender still live).\"] Empty , # [doc = \" Channel closed (sender dropped or `close()` called) and buffer drained.\"] Closed , }",
+      "reason": "enum `TryRecv` derive(Debug): generic enum — a derived Show impl for a generic type needs DN-130's generic-trait-instance mechanism, out of this leaf's scope (ONESHOT C2 / DN-128 enum half)",
+      "item_name": "TryRecv"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 369,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" Result of a non-blocking receive attempt.\"] # [derive (Debug , PartialEq , Eq)] pub enum TryRecv < V > { # [doc = \" Message received.\"] Received (V) , # [doc = \" Channel buffer empty; no message available (sender still live).\"] Empty , # [doc = \" Channel closed (sender dropped or `close()` called) and buffer drained.\"] Closed , }",
+      "reason": "enum `TryRecv` derive(PartialEq): generic enum — a derived equality fn for a generic type needs DN-130's generic-instance mechanism, out of this leaf's scope (ONESHOT C2 / DN-128 enum half)",
+      "item_name": "TryRecv"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "line": 369,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" Result of a non-blocking receive attempt.\"] # [derive (Debug , PartialEq , Eq)] pub enum TryRecv < V > { # [doc = \" Message received.\"] Received (V) , # [doc = \" Channel buffer empty; no message available (sender still live).\"] Empty , # [doc = \" Channel closed (sender dropped or `close()` called) and buffer drained.\"] Closed , }",
+      "reason": "enum `TryRecv` derive(Eq): covered by co-occurring PartialEq → `fn eq_TryRecv` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "TryRecv"
+    }
+  ],
+  "total_top_level_items": 24
+}

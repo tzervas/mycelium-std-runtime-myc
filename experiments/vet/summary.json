@@ -1,0 +1,467 @@
+{
+  "files": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/colony.rs",
+      "total_items": 15,
+      "non_test_items": 14,
+      "emitted": 1,
+      "gaps": 16,
+      "expressible_pct": 7.142857142857142,
+      "category_counts": {
+        "DeriveSatisfied": 1,
+        "GenericBound": 3,
+        "Impl": 3,
+        "Import": 3,
+        "Other": 2,
+        "ReservedWord": 1,
+        "Struct": 2,
+        "TestItem": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "total_items": 16,
+      "non_test_items": 16,
+      "emitted": 4,
+      "gaps": 19,
+      "expressible_pct": 25.0,
+      "category_counts": {
+        "DeriveAttr": 1,
+        "DeriveSatisfied": 6,
+        "Impl": 2,
+        "Import": 3,
+        "Other": 5,
+        "Struct": 1,
+        "Trait": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/guarantee_matrix.rs",
+      "total_items": 3,
+      "non_test_items": 3,
+      "emitted": 0,
+      "gaps": 3,
+      "expressible_pct": 0.0,
+      "category_counts": {
+        "Import": 1,
+        "Other": 1,
+        "Struct": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/lib.rs",
+      "total_items": 14,
+      "non_test_items": 0,
+      "emitted": 0,
+      "gaps": 15,
+      "expressible_pct": 0.0,
+      "category_counts": {
+        "InnerAttr": 1,
+        "ModuleDecl": 13,
+        "TestItem": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+      "total_items": 24,
+      "non_test_items": 24,
+      "emitted": 5,
+      "gaps": 32,
+      "expressible_pct": 20.833333333333336,
+      "category_counts": {
+        "DeriveAttr": 7,
+        "DeriveSatisfied": 5,
+        "GenericBound": 2,
+        "Impl": 5,
+        "Import": 5,
+        "Other": 4,
+        "Struct": 4
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/policy_mech.rs",
+      "total_items": 21,
+      "non_test_items": 21,
+      "emitted": 1,
+      "gaps": 23,
+      "expressible_pct": 4.761904761904762,
+      "category_counts": {
+        "DeriveSatisfied": 3,
+        "Impl": 10,
+        "Import": 2,
+        "MultiStmtBody": 1,
+        "Other": 1,
+        "PayloadVariant": 3,
+        "Struct": 3
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/r2_residual.rs",
+      "total_items": 9,
+      "non_test_items": 9,
+      "emitted": 5,
+      "gaps": 16,
+      "expressible_pct": 55.55555555555556,
+      "category_counts": {
+        "DeriveAttr": 2,
+        "DeriveSatisfied": 7,
+        "Impl": 3,
+        "NamedFieldDrop": 2,
+        "Other": 2
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/rc.rs",
+      "total_items": 6,
+      "non_test_items": 6,
+      "emitted": 1,
+      "gaps": 6,
+      "expressible_pct": 16.666666666666664,
+      "category_counts": {
+        "DeriveAttr": 1,
+        "Impl": 1,
+        "Import": 3,
+        "Struct": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/reclamation.rs",
+      "total_items": 1,
+      "non_test_items": 1,
+      "emitted": 0,
+      "gaps": 1,
+      "expressible_pct": 0.0,
+      "category_counts": {
+        "Import": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/region.rs",
+      "total_items": 18,
+      "non_test_items": 18,
+      "emitted": 5,
+      "gaps": 28,
+      "expressible_pct": 27.77777777777778,
+      "category_counts": {
+        "DeriveAttr": 7,
+        "DeriveSatisfied": 5,
+        "Impl": 5,
+        "Import": 3,
+        "NamedFieldDrop": 1,
+        "Other": 4,
+        "Struct": 3
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/scheduler.rs",
+      "total_items": 1,
+      "non_test_items": 1,
+      "emitted": 0,
+      "gaps": 1,
+      "expressible_pct": 0.0,
+      "category_counts": {
+        "Import": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/scope_region.rs",
+      "total_items": 6,
+      "non_test_items": 6,
+      "emitted": 1,
+      "gaps": 6,
+      "expressible_pct": 16.666666666666664,
+      "category_counts": {
+        "Impl": 1,
+        "Import": 3,
+        "Other": 1,
+        "Struct": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/supervision.rs",
+      "total_items": 1,
+      "non_test_items": 1,
+      "emitted": 0,
+      "gaps": 1,
+      "expressible_pct": 0.0,
+      "category_counts": {
+        "Import": 1
+      }
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/task.rs",
+      "total_items": 13,
+      "non_test_items": 12,
+      "emitted": 7,
+      "gaps": 16,
+      "expressible_pct": 58.333333333333336,
+      "category_counts": {
+        "DeriveAttr": 4,
+        "DeriveSatisfied": 4,
+        "Impl": 2,
+        "Import": 1,
+        "NamedFieldDrop": 2,
+        "Other": 1,
+        "Struct": 1,
+        "TestItem": 1
+      }
+    }
+  ],
+  "totals": {
+    "total_items": 148,
+    "non_test_items": 132,
+    "emitted": 30,
+    "gaps": 183,
+    "expressible_pct": 22.727272727272727,
+    "category_counts": {
+      "DeriveAttr": 22,
+      "DeriveSatisfied": 31,
+      "GenericBound": 5,
+      "Impl": 32,
+      "Import": 27,
+      "InnerAttr": 1,
+      "ModuleDecl": 13,
+      "MultiStmtBody": 1,
+      "NamedFieldDrop": 5,
+      "Other": 21,
+      "PayloadVariant": 3,
+      "ReservedWord": 1,
+      "Struct": 17,
+      "TestItem": 3,
+      "Trait": 1
+    }
+  },
+  "remap": {
+    "phylum": {
+      "source_crate": "mycelium-std-runtime",
+      "target_phylum": "std.runtime"
+    },
+    "nodules": [
+      {
+        "target_nodule": "std.runtime.colony",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/colony.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.dataflow",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.guarantee_matrix",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/guarantee_matrix.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/lib.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.network",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/network.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.policy_mech",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/policy_mech.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.r2_residual",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/r2_residual.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.rc",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/rc.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.reclamation",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/reclamation.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.region",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/region.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.scheduler",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/scheduler.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.scope_region",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/scope_region.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.supervision",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/supervision.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      },
+      {
+        "target_nodule": "std.runtime.task",
+        "operation": "Keep",
+        "sources": [
+          {
+            "rust_path": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/task.rs",
+            "rust_span": null,
+            "moved_items": []
+          }
+        ],
+        "rationale": "structure-preserving 1:1 (DN-109 §5.3-B v0 default: every emitted nodule keeps its source file's mod-tree position, no restructuring proposed)",
+        "safety": "Safe",
+        "api_surface_changed": false,
+        "identity_neutral": true,
+        "guarantee": "Declared"
+      }
+    ],
+    "idiom_choices": []
+  }
+}

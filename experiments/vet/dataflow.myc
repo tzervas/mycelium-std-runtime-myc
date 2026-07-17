@@ -1,0 +1,64 @@
+// nodule: std.runtime.dataflow
+// `run_dataflow` — deadlock-freedom for communicating tasks (M-711 / RFC-0008 §4.3 / E12-1).
+//
+// Communicating tasks (producers/consumers over the [`crate::network`] channels) cannot be run to
+// completion one-at-a-time: a consumer spawned before its producer would block forever. They are
+// **swept** instead — one non-blocking poll-step per still-pending task per sweep — and a sweep
+// that makes **no progress** while tasks remain pending is a [`Deadlock`](crate::task::Deadlock):
+// an **explicit error, never a silent hang** (G2). This is the std-runtime sibling of the proven
+// `mycelium-mlir::runtime::Scope::run_dataflow` model.
+//
+// # Why it can never hang (G2)
+//
+// Every step is a **non-blocking poll** ([`PollTask::poll`] returns [`Step::Pending`] rather than
+// blocking on an empty/full channel — the channel surface is `try_send`/`try_recv` only). "Progress
+// this sweep" = *some task resolved* **or** the caller-supplied monotone `progress` counter advanced
+// (a successful channel op). A full sweep with neither, while pending tasks remain, is a genuine
+// stall — surfaced as `Deadlock`, not a parked thread.
+//
+// # Honesty (VR-5)
+//
+// - **Deadlock detection — `Empirical`.** Detection is *complete* for an acyclic (DAG) channel
+//   graph: a stalled DAG network always trips the no-progress sweep. Cyclic channel graphs are an
+//   open follow-up (FLAG: ADR-020 §7) — flagged, never silently mis-reported. Property-tested, not
+//   `Proven`.
+// - **Sweep determinism — `Exact`** (cooperative path): the schedule is a fixed function of the
+//   sweep direction, so the cooperative run is reproducible. The [`run_dataflow_scheduled`] path
+//   runs each sweep's independent polls across the OS-thread pool (M-709); it shares the *same*
+//   never-silent deadlock decision (a stall is order-independent), tagged `Empirical`.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.runtime.dataflow;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: std.runtime.task) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Deadlock = Deadlock(Binary{64});
+
+// One non-blocking step of a communicating task.
+type Step = Done | Pending;
+
+impl Show[Step] for Step {
+  fn render(x: Step) => Bytes =
+    match x { Done => "Done", Pending => "Pending" };
+};
+
+fn eq_Step(a: Step, b: Step) => Binary{1} =
+  match a { Done => match b { Done => 0b1, _ => 0b0 }, Pending => match b { Pending => 0b1, _ => 0b0 } };
+
+// The order a sweep visits still-pending tasks. Two directions over the same DAG network yield the
+// same completion (Kahn-determinism, RFC-0008 §4.3) — the differential a test checks.
+type SweepDir = Ascending | Descending;
+
+impl Show[SweepDir] for SweepDir {
+  fn render(x: SweepDir) => Bytes =
+    match x { Ascending => "Ascending", Descending => "Descending" };
+};
+
+fn eq_SweepDir(a: SweepDir, b: SweepDir) => Binary{1} =
+  match a { Ascending => match b { Ascending => 0b1, _ => 0b0 }, Descending => match b { Descending => 0b1, _ => 0b0 } };
+
+// A transient placeholder [`PollTask`] swapped into `tasks[i]` while the real task at that index is
+// on loan to a parallel sweep (see [`run_dataflow_scheduled`]) — never actually polled itself (the
+// real task is always swapped back before the next sweep), but must type-check as a valid
+// [`PollTask`] to occupy the slot.
+type AlreadyDone = AlreadyDone;

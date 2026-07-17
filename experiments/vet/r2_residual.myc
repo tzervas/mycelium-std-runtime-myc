@@ -1,0 +1,77 @@
+// nodule: std.runtime.r2_residual
+// The never-silent R2 residual ledger and refusal surface (M-963; DN-78 §3 B-3 / §4; G2).
+//
+// Every M-828-tail item that DN-78 §4 defers to a research spike or Phase II has exactly one
+// row here — construct, why deferred (the unmet prerequisite), and the tracker — plus a
+// [`require`] entry point that refuses with an explicit typed error. The deferral is thereby
+// **mechanized**: inspectable data with a regression guard (a [`DeferredR2`] variant without a
+// ledger row fails the completeness test in `src/tests/r2_residual.rs`), not prose.
+//
+// # Naming note (ADR-020 §5)
+//
+// The RFC-0008 §4.5 reserved vocabulary stays out of public **operation names** (the
+// guarantee-matrix test enforces this). This ledger *names the constructs it refuses* in its
+// **data** — a refusal must name what it refuses to be never-silent (G2) — which is the same
+// posture as the L1 parse-time teaching diagnostics. Nothing here activates a reserved
+// construct or claims one is available.
+//
+// # Guarantee tags (VR-5)
+//
+// - Refusal totality ([`require`] on every deferred item returns an explicit error, in
+//   Phase I): **`Exact`** — by construction ([`require`] is a total match; tested).
+// - Ledger completeness (one row per [`DeferredR2`] variant, tracker + basis non-empty):
+//   **`Exact`** — enforced by test over [`DeferredR2::ALL`].
+// - The *deferral decisions themselves* are `Declared` (DN-78 §4/§5 — grounded in DN-63's
+//   prerequisite analysis, no formal dependency proof).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.runtime.r2_residual;
+
+// Declared: ambient Result type co-emit — oracle self-containment (G-α Rank-1 / L2-A). Type shape cites lib/std/result.myc (Ok/Err sum); combinators are NOT fabricated (VR-5/G2). Checker does not seed Result as prelude (unlike Bool/Unit unconditional, Vec conditional).
+type Result[A, E] = Ok(A) | Err(E);
+
+// A deferred M-828-tail item (DN-78 §4). Each variant carries exactly one [`ResidualRow`] in
+// [`RESIDUALS`] (completeness is tested, not assumed).
+type DeferredR2 = MeshOverlay | GraftCapability | XlocMovement | CystCheckpoint | CaptureSetL1Surface | MultiNodePlacement;
+
+impl Show[DeferredR2] for DeferredR2 {
+  fn render(x: DeferredR2) => Bytes =
+    match x { MeshOverlay => "MeshOverlay", GraftCapability => "GraftCapability", XlocMovement => "XlocMovement", CystCheckpoint => "CystCheckpoint", CaptureSetL1Surface => "CaptureSetL1Surface", MultiNodePlacement => "MultiNodePlacement" };
+};
+
+fn eq_DeferredR2(a: DeferredR2, b: DeferredR2) => Binary{1} =
+  match a { MeshOverlay => match b { MeshOverlay => 0b1, _ => 0b0 }, GraftCapability => match b { GraftCapability => 0b1, _ => 0b0 }, XlocMovement => match b { XlocMovement => 0b1, _ => 0b0 }, CystCheckpoint => match b { CystCheckpoint => 0b1, _ => 0b0 }, CaptureSetL1Surface => match b { CaptureSetL1Surface => 0b1, _ => 0b0 }, MultiNodePlacement => match b { MultiNodePlacement => 0b1, _ => 0b0 } };
+
+// One ledger row: what is deferred, why, and where it is tracked (DN-78 §4; G2 — the residual
+// is explicit data, not a silent gap).
+type ResidualRow = ResidualRow(DeferredR2, Bytes, Bytes, Bytes, Bytes);
+
+impl Show[ResidualRow] for ResidualRow {
+  fn render(x: ResidualRow) => Bytes =
+    match x { ResidualRow(p0, p1, p2, p3, p4) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("ResidualRow(", render(p0)), ", "), render(p1)), ", "), render(p2)), ", "), render(p3)), ", "), render(p4)), ")") };
+};
+
+fn eq_ResidualRow(a: ResidualRow, b: ResidualRow) => Binary{1} =
+    match a { ResidualRow(p0, p1, p2, p3, p4) => match b { ResidualRow(q0, q1, q2, q3, q4) => and(and(and(and(eq_DeferredR2(p0, q0), bytes_eq(p1, q1)), bytes_eq(p2, q2)), bytes_eq(p3, q3)), bytes_eq(p4, q4)) } };
+
+// The explicit refusal a deferred item's [`require`] returns (G2: typed, inspectable, and
+// teaching — it names the construct, the unmet prerequisite, and the tracker).
+type R2DeferredError = R2DeferredError(DeferredR2, ResidualRow);
+
+impl Show[R2DeferredError] for R2DeferredError {
+  fn render(x: R2DeferredError) => Bytes =
+    match x { R2DeferredError(p0, p1) => bytes_concat(bytes_concat(bytes_concat(bytes_concat("R2DeferredError(", render(p0)), ", "), render(p1)), ")") };
+};
+
+fn eq_R2DeferredError(a: R2DeferredError, b: R2DeferredError) => Binary{1} =
+    match a { R2DeferredError(p0, p1) => match b { R2DeferredError(q0, q1) => and(eq_DeferredR2(p0, q0), eq_ResidualRow(p1, q1)) } };
+
+// The refusal entry point: a runtime path that would need a deferred construct calls this and
+// gets an explicit typed error — never a silent no-op or fallback (G2).
+//
+// In Phase I this refuses for **every** [`DeferredR2`] item (guarantee: **`Exact`** — total by
+// construction; tested over [`DeferredR2::ALL`]). The signature is the stable contract: when a
+// construct activates through its own vehicle (DN-78 §4 trackers), its arm returns `Ok(())`
+// and its ledger row is retired append-only.
+fn require(item: DeferredR2) => Result[Unit, R2DeferredError] = Err(R2DeferredError(item, residual_for(item)));

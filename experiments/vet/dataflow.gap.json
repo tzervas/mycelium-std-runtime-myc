@@ -1,0 +1,202 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+  "emitted_items": [
+    "co-include:Deadlock",
+    "Step",
+    "SweepDir",
+    "AlreadyDone"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 29,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use std :: sync :: atomic :: { AtomicU64 , Ordering } ;",
+      "reason": "`use std.sync.atomic::AtomicU64` — `std.sync.atomic` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use std.sync.atomic::Ordering` — `std.sync.atomic` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 31,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_core :: GuaranteeStrength ;",
+      "reason": "`use mycelium_core::GuaranteeStrength` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 33,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: scheduler :: Scheduler ;",
+      "reason": "`use scheduler::Scheduler` — `Scheduler` is not among sibling `scheduler`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 36,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Guarantee strength for deadlock detection (complete for DAG channel graphs; cyclic = open).\"] pub const DEADLOCK_DETECTION_STRENGTH : GuaranteeStrength = GuaranteeStrength :: Empirical ;",
+      "reason": "top-level `const DEADLOCK_DETECTION_STRENGTH` — co-emit (ORACLE-R1 A4) only covers plain unsigned integer types (`u8`/`u16`/`u32`/`u64`/`u128`/`usize`); other types have no const item production and no faithful zero-arg-fn encoding (gap, never fabricate)",
+      "item_name": "DEADLOCK_DETECTION_STRENGTH"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 39,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Guarantee strength for the cooperative sweep schedule (a fixed function of the sweep direction).\"] pub const SWEEP_DETERMINISM_STRENGTH : GuaranteeStrength = GuaranteeStrength :: Exact ;",
+      "reason": "top-level `const SWEEP_DETERMINISM_STRENGTH` — co-emit (ORACLE-R1 A4) only covers plain unsigned integer types (`u8`/`u16`/`u32`/`u64`/`u128`/`usize`); other types have no const item production and no faithful zero-arg-fn encoding (gap, never fabricate)",
+      "item_name": "SWEEP_DETERMINISM_STRENGTH"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 42,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One non-blocking step of a communicating task.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum Step { # [doc = \" The task resolved (it will not be polled again).\"] Done , # [doc = \" The task made no terminal progress this step — typically parked on an empty/full channel.\"] # [doc = \" **Never blocks**: parking is an explicit value, so the sweep can detect a stall (G2).\"] Pending , }",
+      "reason": "enum `Step` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Step"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 42,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One non-blocking step of a communicating task.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum Step { # [doc = \" The task resolved (it will not be polled again).\"] Done , # [doc = \" The task made no terminal progress this step — typically parked on an empty/full channel.\"] # [doc = \" **Never blocks**: parking is an explicit value, so the sweep can detect a stall (G2).\"] Pending , }",
+      "reason": "enum `Step` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Step"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 42,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One non-blocking step of a communicating task.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum Step { # [doc = \" The task resolved (it will not be polled again).\"] Done , # [doc = \" The task made no terminal progress this step — typically parked on an empty/full channel.\"] # [doc = \" **Never blocks**: parking is an explicit value, so the sweep can detect a stall (G2).\"] Pending , }",
+      "reason": "enum `Step` derive(Eq): covered by co-occurring PartialEq → `fn eq_Step` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "Step"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 52,
+      "col": 1,
+      "category": "Trait",
+      "rust_construct": "Trait",
+      "snippet": "# [doc = \" A communicating task that is **swept** (polled non-blockingly) rather than run to completion.\"] # [doc = \"\"] # [doc = \" `poll` must never block: park (return [`Step::Pending`]) instead of waiting on a channel, so a\"] # [doc = \" global stall is detectable as an explicit [`Deadlock`] rather than a hung thread (G2).\"] pub trait PollTask { # [doc = \" Take one non-blocking step. Returns [`Step::Done`] when the task has resolved.\"] fn poll (& mut self) -> Step ; }",
+      "reason": "trait `PollTask` method `poll` signature has no confirmed mapping (a trait-body `Self`/`self` has no concrete referent in this grammar; `self` parameter with no enclosing impl/trait context)",
+      "item_name": "PollTask"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 61,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The order a sweep visits still-pending tasks. Two directions over the same DAG network yield the\"] # [doc = \" same completion (Kahn-determinism, RFC-0008 §4.3) — the differential a test checks.\"] # [derive (Debug , Clone , Copy , Default , PartialEq , Eq)] pub enum SweepDir { # [doc = \" Ascending task index (default).\"] # [default] Ascending , # [doc = \" Descending task index.\"] Descending , }",
+      "reason": "enum `SweepDir` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "SweepDir"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 61,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The order a sweep visits still-pending tasks. Two directions over the same DAG network yield the\"] # [doc = \" same completion (Kahn-determinism, RFC-0008 §4.3) — the differential a test checks.\"] # [derive (Debug , Clone , Copy , Default , PartialEq , Eq)] pub enum SweepDir { # [doc = \" Ascending task index (default).\"] # [default] Ascending , # [doc = \" Descending task index.\"] Descending , }",
+      "reason": "enum `SweepDir` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "SweepDir"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 61,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The order a sweep visits still-pending tasks. Two directions over the same DAG network yield the\"] # [doc = \" same completion (Kahn-determinism, RFC-0008 §4.3) — the differential a test checks.\"] # [derive (Debug , Clone , Copy , Default , PartialEq , Eq)] pub enum SweepDir { # [doc = \" Ascending task index (default).\"] # [default] Ascending , # [doc = \" Descending task index.\"] Descending , }",
+      "reason": "enum `SweepDir` derive(Eq): covered by co-occurring PartialEq → `fn eq_SweepDir` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "SweepDir"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 61,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The order a sweep visits still-pending tasks. Two directions over the same DAG network yield the\"] # [doc = \" same completion (Kahn-determinism, RFC-0008 §4.3) — the differential a test checks.\"] # [derive (Debug , Clone , Copy , Default , PartialEq , Eq)] pub enum SweepDir { # [doc = \" Ascending task index (default).\"] # [default] Ascending , # [doc = \" Descending task index.\"] Descending , }",
+      "reason": "enum `SweepDir` derive(...) names Default not in the DN-128 enum-derive set this leaf builds (Debug/PartialEq/Clone/Copy recognized; bare Eq is a satisfied co-occurrence note; Hash/PartialOrd/Ord/Default stay product-only for now) — dropped, no confirmed Mycelium surface",
+      "item_name": "SweepDir"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 72,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" A monotone progress counter for channel work — bump it on every successful `try_send`/`try_recv`\"] # [doc = \" so the sweep can tell \\\"a channel op advanced the network\\\" from \\\"nothing moved\\\" (G2).\"] # [doc = \"\"] # [doc = \" The driver reads it once per sweep; the caller increments it from inside task polls.\"] # [derive (Debug , Default)] pub struct Progress { epoch : AtomicU64 , }",
+      "reason": "struct `Progress` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "Progress"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 81,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl Progress { # [doc = \" A fresh counter at epoch 0.\"] # [must_use] pub fn new () -> Self { Progress { epoch : AtomicU64 :: new (0) , } } # [doc = \" Record one unit of channel progress (a successful send or recv).\"] pub fn bump (& self) { self . epoch . fetch_add (1 , Ordering :: SeqCst) ; } # [doc = \" The current epoch (monotone).\"] # [must_use] pub fn epoch (& self) -> u64 { self . epoch . load (Ordering :: SeqCst) } }",
+      "reason": "no member of this impl block could be transpiled (3 sub-issue(s)): impl method `new` body: struct literal `Progress { .. }` — not an in-file single-ctor struct or enum struct-variant that emits (no constructor to build; a cross-nodule variant is an honest DN-113/DN-134-OQ-2 resolvability gap, never a fabricated out-of-file reference — VR-5/G2); impl method `bump` signature: function has no return type (implicit `()`) — no unit value is representable in this grammar fragment; impl method `epoch` body: method call `.load(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__load` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `load(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "Progress"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 102,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "fn sweep_indices (n : usize , dir : SweepDir) -> Vec < usize > { match dir { SweepDir :: Ascending => (0 .. n) . collect () , SweepDir :: Descending => (0 .. n) . rev () . collect () , } }",
+      "reason": "method call `.collect(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__collect` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `collect(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "sweep_indices"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 109,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Sweep `tasks` cooperatively until all resolve, or return [`Deadlock`] on a no-progress sweep.\"] # [doc = \"\"] # [doc = \" `progress()` reports the monotone count of channel work done *outside* the tasks' own resolution.\"] # [doc = \" A sweep counts as progress if **either** a task resolved **or** `progress()` advanced; a full\"] # [doc = \" sweep with neither, while tasks remain pending, is an explicit [`Deadlock`] — never a hang (G2).\"] # [doc = \"\"] # [doc = \" Guarantee: schedule is **`Exact`** (a fixed function of `dir`); deadlock detection is\"] # [doc = \" **`Empirical`** (complete for DAG channel graphs — see module docs).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \" Returns [`Deadlock`] (carrying the count of still-parked tasks) when a full sweep makes no\"] # [doc = \" progress while tasks remain pending.\"] pub fn run_dataflow (tasks : & mut [Box < dyn PollTask >] , dir : SweepDir , progress : impl Fn () -> u64 ,) -> Result < () , Deadlock > { let n = tasks . len () ; let mut done = vec ! [false ; n] ; let mut remaining = n ; let order = sweep_indices (n , dir) ; while remaining > 0 { let before = progress () ; let mut advanced = false ; for & i in & order { if done [i] { continue ; } if tasks [i] . poll () == Step :: Done { done [i] = true ; remaining -= 1 ; advanced = true ; } } if ! advanced && progress () == before && remaining > 0 { return Err (Deadlock :: new (remaining)) ; } } Ok (()) }",
+      "reason": "unsupported Rust type form `dyn PollTask`",
+      "item_name": "run_dataflow"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 159,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl PollTask for AlreadyDone { fn poll (& mut self) -> Step { Step :: Done } }",
+      "reason": "trait-impl of non-prelude trait `PollTask` — no ambient trait definition and synthetic trait emission is refused (DN-34 §8.8 / DN-122 MVP); gapped the whole impl so the residual cannot file-poison myc-check (G2; express gap-close 2026-07-16)",
+      "item_name": "AlreadyDone"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-runtime/src/dataflow.rs",
+      "line": 165,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" As [`run_dataflow`], but each sweep's independent polls run **across the OS-thread pool**\"] # [doc = \" (M-709/M-864) — the \\\"checked across OS threads\\\" path (RFC-0008 §4.3 under the real scheduler).\"] # [doc = \"\"] # [doc = \" Each still-pending task is polled **at most once per sweep** on a worker thread; the tasks are\"] # [doc = \" disjoint objects (no shared mutable state but the channels, RT1), so the parallel polls are\"] # [doc = \" data-race-free. The deadlock decision is identical and order-independent: a stall is a stall in\"] # [doc = \" any sweep order, so it is surfaced as the same explicit [`Deadlock`] (G2), never a hung worker.\"] # [doc = \"\"] # [doc = \" **M-864 note:** `Scheduler::run_indexed` now requires `'static` job closures (the persistent\"] # [doc = \" pool's worker threads outlive any single call), so this sweep can no longer *borrow* `tasks[i]`\"] # [doc = \" by `&mut` across the call the way the pre-M-864 `thread::scope`-backed scheduler allowed. Each\"] # [doc = \" still-pending task is instead swapped **out** of `tasks` (taking ownership, `'static` by\"] # [doc = \" construction — only the borrow was ever the obstacle, not the boxed task itself) for the\"] # [doc = \" duration of the parallel poll, and swapped back the moment its result is in hand — the sweep's\"] # [doc = \" own book-keeping (`done`/`remaining`) and the deadlock decision are otherwise unchanged.\"] # [doc = \"\"] # [doc = \" Guarantee: deadlock detection **`Empirical`** (same basis as [`run_dataflow`], now exercised on\"] # [doc = \" real OS threads).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \" Returns [`Deadlock`] when a full parallel sweep makes no progress while tasks remain pending.\"] pub fn run_dataflow_scheduled (scheduler : & Scheduler , tasks : & mut [Box < dyn PollTask + Send >] , progress : impl Fn () -> u64 ,) -> Result < () , Deadlock > { let n = tasks . len () ; let mut done = vec ! [false ; n] ; let mut remaining = n ; while remaining > 0 { let before = progress () ; let pending : Vec < usize > = (0 .. n) . filter (| & i | ! done [i]) . collect () ; let taken : Vec < Box < dyn PollTask + Send > > = pending . iter () . map (| & i | std :: mem :: replace (& mut tasks [i] , Box :: new (AlreadyDone))) . collect () ; let jobs : Vec < _ > = taken . into_iter () . map (| mut t | { move | | { let became_done = matches ! (t . poll () , Step :: Done) ; (t , became_done) } }) . collect () ; let results = scheduler . run_indexed (jobs , None , None) ; let mut advanced = false ; for (& i , (t , became_done)) in pending . iter () . zip (results) { tasks [i] = t ; if became_done { done [i] = true ; remaining -= 1 ; advanced = true ; } } if ! advanced && progress () == before && remaining > 0 { return Err (Deadlock :: new (remaining)) ; } } Ok (()) }",
+      "reason": "unsupported Rust type form `dyn PollTask + Send`",
+      "item_name": "run_dataflow_scheduled"
+    }
+  ],
+  "total_top_level_items": 16
+}

@@ -1,0 +1,69 @@
+// nodule: std.runtime.task
+// Task, TaskCtx, Poll, SweepOrder, Deadlock — task surface (ADR-020 v0 R1).
+//
+// # Guarantee (Declared — Task purity contract)
+//
+// `Task` purity is **Declared**: the type system cannot enforce that a task body
+// has no side effects, so this is an assertion-level guarantee (VR-5: not upgraded
+// to Empirical/Proven without a checked basis).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.runtime.task;
+
+// Context passed to a running task — carries cancellation signal and scope ref.
+type TaskCtx = TaskCtx(Bool);
+
+impl Show[TaskCtx] for TaskCtx {
+  fn render(x: TaskCtx) => Bytes =
+    match x { TaskCtx(p0) => bytes_concat(bytes_concat("TaskCtx(", render(p0)), ")") };
+};
+
+impl TaskCtx {
+  // Declared: renamed `impl TaskCtx { fn new }` -> `_7TaskCtx3new` (D4 inherent-impl flat-fn desugar + DN-140 length-prefix mangle, M-664).
+  fn _7TaskCtx3new() => TaskCtx = TaskCtx(False);
+  // Returns `true` if this task's scope has been cancelled.
+  fn is_cancelled(self: TaskCtx) => Bool = (match self { TaskCtx(p0) => p0 });
+  // Cancel this context (used by `Scope` when cancellation is requested).
+  fn cancel(self: TaskCtx) => TaskCtx = let self = TaskCtx(True) in self;
+};
+
+// Declared: prelude-trait remapping — foreign-trait impl of a prelude-seeded single-param trait (DN-122 Ord3 MVP and/or DN-129 Default→Init); the `[<SelfTy>]` argument below is synthesized (Rust's zero-explicit-arg `impl Trait for T` never spells it — Mycelium stage-1 has no implicit Self slot, RFC-0019 §4.1).
+impl Init[TaskCtx] for TaskCtx {
+  fn init() => TaskCtx = _7TaskCtx3new();
+};
+
+// Poll result for an async task step.
+type Poll[T] = Ready(T) | Pending;
+
+// Order in which tasks are swept from a scope's run queue.
+//
+// Guarantee: **Exact** — the sweep order is deterministic given the same queue state.
+type SweepOrder = Fifo | Priority;
+
+impl Show[SweepOrder] for SweepOrder {
+  fn render(x: SweepOrder) => Bytes =
+    match x { Fifo => "Fifo", Priority => "Priority" };
+};
+
+fn eq_SweepOrder(a: SweepOrder, b: SweepOrder) => Binary{1} =
+  match a { Fifo => match b { Fifo => 0b1, _ => 0b0 }, Priority => match b { Priority => 0b1, _ => 0b0 } };
+
+// Deadlock descriptor: returned when a scope cannot make progress.
+//
+// Guarantee: **Empirical** — detection is complete for the supported channel graph
+// (DAG channels); cyclic graphs are an open follow-up (FLAG: ADR-020 §7).
+pub type Deadlock = Deadlock(Binary{64});
+
+impl Show[Deadlock] for Deadlock {
+  fn render(x: Deadlock) => Bytes =
+    match x { Deadlock(p0) => bytes_concat(bytes_concat("Deadlock(", render(p0)), ")") };
+};
+
+fn eq_Deadlock(a: Deadlock, b: Deadlock) => Binary{1} =
+    match a { Deadlock(p0) => match b { Deadlock(q0) => eq(p0, q0) } };
+
+impl Deadlock {
+  // Declared: renamed `impl Deadlock { fn new }` -> `_8Deadlock3new` (D4 inherent-impl flat-fn desugar + DN-140 length-prefix mangle, M-664).
+  fn _8Deadlock3new(task_count: Binary{64}) => Deadlock = Deadlock(task_count);
+};
